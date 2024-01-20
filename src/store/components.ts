@@ -61,7 +61,9 @@ export const useComponentsStore = defineStore('components', () : any => {
       return components
     }
 
-    const filteredComponents = components.map((item) : { id: string, name: string } => { return { id: item.id, name: getComponentName(item) } }).filter(item => item.name.match(query))
+    const regex = new RegExp(query, "i")
+
+    const filteredComponents = components.map((item) : { id: string, name: string } => { return { id: item.id, name: getComponentName(item) } }).filter(item => item.name.match(regex))
 
     const result : ElectronicComponent[] = []
     filteredComponents.forEach(component => {
