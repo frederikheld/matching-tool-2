@@ -24,17 +24,34 @@ const routes = [
       {
         path: '/projects',
         name: 'projects',
+        meta: {
+          title: 'Projekte'
+        },
         component: () => import(/* webpackChunkName: "projects" */ '@/views/ProjectsView.vue')
       },
       {
         path: '/catalog',
         name: 'catalog',
+        meta: {
+          title: 'Katalog'
+        },
         component: () => import(/* webpackChunkName: "catalog" */ '@/views/CatalogView.vue')
       },
       {
         path: '/bom',
         name: 'bom',
+        meta: {
+          title: 'Stückliste'
+        },
         component: () => import(/* webpackChunkName: "bom" */ '@/views/BillOfMaterialsView.vue')
+      },
+      {
+        path: '/settings',
+        name: 'settings',
+        meta: {
+          title: 'Einstellungen'
+        },
+        component: () => import(/* webpackChunkName: "bom" */ '@/views/SettingsView.vue')
       }
     ],
   },

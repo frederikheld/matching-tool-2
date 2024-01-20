@@ -6,7 +6,7 @@
   <v-navigation-drawer>
     <v-list class="d-flex flex-column" height="100%">
       <v-list-item
-        prepend-icon="mdi-book-outline"
+        prepend-icon="mdi-progress-check"
         to="projects"
       >
         Projekte
