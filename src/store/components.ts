@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 
+import capacitors from './components/capacitors.json'
+
 /**
  * PUBLIC TYPES AND INTERFACES
  */
@@ -48,17 +50,10 @@ function capitalize (string: string) : string {
  * STORE
  */
 
-export const useComponentsStore = defineStore('components', () => {
+export const useComponentsStore = defineStore('components', () : any => {
 
   const components: ElectronicComponent[] = [
-    // IC COMPONENTS:
-
-    { id: 'ic-000000', type: 'capacitor', housing: 'FD', width: 10, length: 12, height: 6, mass: 318, massUnit: 'mg', inGabiDB: true },
-    { id: 'ic-000001', type: 'capacitor', housing: 'FD', width: 10, length: 12, height: 6, mass: 335, massUnit: 'mg', inGabiDB: false, referenceComponent: 'ic-000000', scalingFactor: 1.1 },
-    { id: 'ic-000002', type: 'capacitor', housing: 'FD', width: 10, length: 12, height: 6, mass: 347, massUnit: 'mg', inGabiDB: false, referenceComponent: 'ic-000000', scalingFactor: 1.21 },
-    { id: 'ic-000003', type: 'capacitor', housing: 'FD', width: 10, length: 12, height: 6, mass: 412, massUnit: 'mg', inGabiDB: false, referenceComponent: 'ic-000000', scalingFactor: 1.26 },
-    { id: 'ic-000004', type: 'capacitor', housing: 'FD', width: 10, length: 12, height: 6, mass: 475, massUnit: 'mg', inGabiDB: false, referenceComponent: 'ic-000000', scalingFactor: 1.7 },
-    { id: 'ic-000005', type: 'capacitor', housing: 'FD', width: 10, length: 12, height: 6, mass: 490, massUnit: 'mg', inGabiDB: false, referenceComponent: 'ic-000000', scalingFactor: 1.73 }
+    ...(capacitors as ElectronicComponent[])
   ]
 
   function filterItems (query: string | undefined): ElectronicComponent[] {
