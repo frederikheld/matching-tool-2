@@ -88,7 +88,7 @@ const formattedBillOfMaterials = computed(() => {
       </v-col>
     </v-row>
     <v-row class="d-flex flex-row">
-      <v-col cols="4" class="d-flex flex-column pa-0" style="max-height: calc(100vh - 64px - 110px);">
+      <v-col class="d-flex flex-column pa-0" style="max-width: 350px; max-height: calc(100vh - 64px - 81px);">
         <div class="d-flex flex-column flex-grow-1" style="overflow-y: hidden;">
           <v-list density="compact">
             <v-list-item v-for="component in searchResults" :key="component.id" @click="selectedComponent = component" :active="selectedComponent?.id === component.id" :append-icon="(selectedComponent?.id === component.id ? 'mdi-menu-right' : undefined)">
@@ -101,7 +101,7 @@ const formattedBillOfMaterials = computed(() => {
           </v-list>
         </div>
       </v-col>
-      <v-col cols="8" class="d-flex flex-column">
+      <v-col class="d-flex flex-column">
         <v-row class="flex-grow-0" style="min-height: 250px;">
           <v-col>
             <SelectedComponent :component="selectedComponent" @component-selected="(componentId: string) => selectedComponent = componentsStore.getComponentById(componentId)" />
