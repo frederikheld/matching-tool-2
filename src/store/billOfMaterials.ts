@@ -1,48 +1,56 @@
 import { computed, ref } from 'vue'
-import type { ElectronicComponent } from '@/store/components'
-import { getComponentName } from '@/store/components'
+import { defineStore } from 'pinia'
+
+import type { ElectronicComponent } from './components'
+import { getComponentName } from './components'
+
+
+/**
+ * PUBLIC TYPES AND INTERFACES
+ */
 
 export type BillOfMaterialsItem = (ElectronicComponent & { count: number })
 
-export function useBillOfMaterials () {
 
-  /**
-   * VARIABLES
-   */
+/**
+ * PUBLIC CONSTANTS (NON-REACTIVE)
+ */
 
-  /**
-   * Use for `headers` prop on `v-data-table` in desktop layout.
-   */
-  const billOfMaterialsHeader = [
-    { key: 'id', title: 'ID' },
-    { key: 'name', title: 'Name' },
-    { key: 'referenceComponent', title: 'Reference Component' },
-    { key: 'scalingFactor', title: 'Scaling Factor' },
-    { key: 'count', title: 'Count' }
-  ]
+/**
+ * Use for `headers` prop on `v-data-table` in desktop layout.
+ */
+export const billOfMaterialsHeader = [
+  { key: 'id', title: 'ID' },
+  { key: 'name', title: 'Name' },
+  { key: 'referenceComponent', title: 'Reference Component' },
+  { key: 'scalingFactor', title: 'Scaling Factor' },
+  { key: 'count', title: 'Count' }
+]
 
-  /**
-   * Use for `headers` prop on `v-data-table` in mobile layout.
-   */
-  const billOfMaterialsHeaderCompact = [
-    { key: 'id', title: 'ID' },
-    { key: 'name', title: 'Name' },
-    { key: 'referenceComponent', title: 'Ref' },
-    { key: 'scalingFactor', title: 'SF' },
-    { key: 'count', title: '#' }
-  ]
+/**
+ * Use for `headers` prop on `v-data-table` in mobile layout.
+ */
+export const billOfMaterialsHeaderCompact = [
+  { key: 'id', title: 'ID' },
+  { key: 'name', title: 'Name' },
+  { key: 'referenceComponent', title: 'Ref' },
+  { key: 'scalingFactor', title: 'SF' },
+  { key: 'count', title: '#' }
+]
 
 
-  /**
-   * REFS
-   */
+/**
+ * PUBLIC FUNCTIONS
+ */
 
+
+/**
+ * STORE
+ */
+
+export const useBillOfMaterialsStore = defineStore('billOfMaterials', () : any => {
   const billOfMaterials = ref<BillOfMaterialsItem[]>([])
-
-
-  /**
-   * METHODS
-   */
+  // const billOfMaterials : Ref<BillOfMaterialsItem[]> = ref([])
 
   /**
    * Will add the given count of the given component to the bill of materials.
@@ -77,7 +85,6 @@ export function useBillOfMaterials () {
       const existingEntry: BillOfMaterialsItem | undefined = billOfMaterials.value.find((entry) => entry.id === component.id)
 
       if (existingEntry) {
-
         if (count) {
           existingEntry.count = existingEntry.count - count
 
@@ -98,7 +105,13 @@ export function useBillOfMaterials () {
    * COMPUTED PROPERTIES
    */
 
-  const formattedBillOfMaterials = computed(() => {
+  const formattedBillOfMaterials = computed<{
+    id: string,
+    name: string,
+    referenceComponent: string | undefined,
+    scalingFactor: number | undefined,
+    count: number
+  }[]>(() => {
     return billOfMaterials.value.map((component) => {
       return {
         id: component.id,
@@ -110,17 +123,10 @@ export function useBillOfMaterials () {
     })
   })
 
-
-  /**
-   * EXPORTS
-   */
-
   return {
-    billOfMaterialsHeader,
-    billOfMaterialsHeaderCompact,
     billOfMaterials,
     formattedBillOfMaterials,
     addToBillOfMaterials,
     removeFromBillOfMaterials
   }
-}
+})

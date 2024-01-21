@@ -6,25 +6,16 @@ import type { ElectronicComponent, ElectronicComponentId } from '@/store/compone
 
 import SelectedComponent from './SelectedComponent.vue'
 
-import { useBillOfMaterials } from './billOfMaterials'
+import { useBillOfMaterialsStore, billOfMaterialsHeaderCompact } from '@/store/billOfMaterials'
 
-// const props = defineProps<{
-//   selectComponent: ElectronicComponent
-// }>()
+const componentsStore = useComponentsStore()
 
-const {
-  billOfMaterialsHeaderCompact,
-  formattedBillOfMaterials,
-  addToBillOfMaterials,
-  removeFromBillOfMaterials
-} = useBillOfMaterials() 
+const bomStore = useBillOfMaterialsStore()
 
 const bottomSheetClosedHeight = '72px'
 const bottomSheetOpenHeight = '40%'
 const bottomSheetIsOpen = ref<boolean>(true)
 const bottomSheetHeight = ref<string>(bottomSheetClosedHeight)
-
-const componentsStore = useComponentsStore()
 
 const query = ref<string>()
 
@@ -53,11 +44,11 @@ function selectComponent (componentId: ElectronicComponentId) : any {
         <v-container class="pa-0">
           <v-row>
             <v-col class="text-center">
-              <v-btn color="primary" :disabled="!selectedComponent" @click="addToBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-plus</v-icon>1</v-btn>
-              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="addToBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-plus</v-icon>10</v-btn>
-              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="removeFromBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-minus</v-icon>1</v-btn>
-              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="removeFromBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-minus</v-icon>10</v-btn>
-              <v-btn color="warning" :disabled="!selectedComponent" class="ml-2" @click="removeFromBillOfMaterials(selectedComponent)"><v-icon>mdi-delete</v-icon></v-btn>
+              <v-btn color="primary" :disabled="!selectedComponent" @click="bomStore.addToBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-plus</v-icon>1</v-btn>
+              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="bomStore.addToBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-plus</v-icon>10</v-btn>
+              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-minus</v-icon>1</v-btn>
+              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-minus</v-icon>10</v-btn>
+              <v-btn color="warning" :disabled="!selectedComponent" class="ml-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent)"><v-icon>mdi-delete</v-icon></v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -65,9 +56,9 @@ function selectComponent (componentId: ElectronicComponentId) : any {
     </v-row>
 
     <v-row class="pa-0 mx-n7">
-      <v-col v-if="formattedBillOfMaterials.length > 0">
+      <v-col v-if="bomStore.formattedBillOfMaterials.length > 0">
         <v-data-table
-          :items="formattedBillOfMaterials"
+          :items="bomStore.formattedBillOfMaterials"
           items-per-page="-1"
           density="comfortable"
           fixed-header
