@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { useComponentsStore, getComponentName, type ElectronicComponent } from '@/store/components'
+import { useComponentsStore, getComponentName } from '@/store/components'
+import type { ElectronicComponent, ElectronicComponentId } from '@/store/components'
 
 import SelectedComponent from './BillOfMaterials/SelectedComponent.vue'
 
@@ -72,6 +73,10 @@ const formattedBillOfMaterials = computed(() => {
     }
   })
 })
+
+function selectComponent (componentId: ElectronicComponentId) : any {
+  selectedComponent.value = componentsStore.getComponentById(componentId)
+}
 </script>
 
 <template>
@@ -91,11 +96,15 @@ const formattedBillOfMaterials = computed(() => {
       <v-col class="d-flex flex-column pa-0" style="max-width: 380px; max-height: calc(100vh - 64px - 81px);">
         <div class="d-flex flex-column flex-grow-1" style="overflow-y: hidden;">
           <v-list density="compact">
-            <v-list-item v-for="component in searchResults" :key="component.id" @click="selectedComponent = component" :active="selectedComponent?.id === component.id" :append-icon="(selectedComponent?.id === component.id ? 'mdi-menu-right' : undefined)">
+            <v-list-item v-for="component in searchResults" :key="component.id" @click="selectedComponent = component" :active="selectedComponent?.id === component.id">
               <template #prepend style="width: 36px !important;">
                 <v-icon v-if="component.inGabiDB">mdi-star-four-points-small</v-icon>
                 <v-icon v-else></v-icon>
               </template>
+
+              <!-- <template #append v-if="selectedComponent?.id === component.id">
+                <v-icon>mdi-menu-right</v-icon>
+              </template> -->
               {{ getComponentName(component) }}
             </v-list-item>
           </v-list>
@@ -104,12 +113,12 @@ const formattedBillOfMaterials = computed(() => {
       <v-col class="d-flex flex-column">
         <v-row class="flex-grow-0" style="min-height: 250px;">
           <v-col>
-            <SelectedComponent :component="selectedComponent" @component-selected="(componentId) => selectedComponent = componentsStore.getComponentById(componentId)" />
+            <SelectedComponent :component="selectedComponent" @component-selected="(componentId) => selectComponent(componentId)" />
           </v-col>
         </v-row>
         <v-row class="flex-grow-0">
           <v-col class="text-center">
-            <v-card elevation="0" style="background-color: rgba(0, 0, 0, 0.05);">
+            <v-card elevation="0" style="background-color: rgba(0, 0, 0, 0.03);">
               <v-card-text>
                 <v-btn @click="addToBillOfMaterials(selectedComponent, 1)">+ 1</v-btn>
                 <v-btn class="ml-2" @click="addToBillOfMaterials(selectedComponent, 10)">+ 10</v-btn>
@@ -127,6 +136,12 @@ const formattedBillOfMaterials = computed(() => {
               items-per-page="-1"
               density="comfortable"
               fixed-header
+              :row-props="(data) => {
+                return {
+                  class: [data.item.id === selectedComponent?.id && 'selected']
+                }
+              }"
+              @click:row="(event: Event, row: any) => selectComponent(row.item.id)"
             />
           </v-col>
           <v-col v-else class="text-center">
@@ -141,5 +156,13 @@ const formattedBillOfMaterials = computed(() => {
 <style scoped>
 :deep(.v-data-table-footer) {
   display: none;
+}
+
+:deep(.v-table__wrapper > table > tbody > tr:hover) {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+:deep(.v-table__wrapper > table > tbody > tr.selected) {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 </style>
