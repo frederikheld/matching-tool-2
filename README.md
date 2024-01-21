@@ -1,4 +1,10 @@
-# default
+# Matching Tool 2
+
+This is a re-write of my student research project from 2012.
+
+The re-write focuses on the interface for now, to demonstrate how this app could look like today. It comes with a desktop and a mobile layout that seamlessly transition into each other.
+
+No backend or backend integration yet!
 
 ## Project setup
 
