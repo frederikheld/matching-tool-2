@@ -1,9 +1,12 @@
 <script setup lang="ts">
-
+const props = defineProps<{
+  modelValue: boolean
+}>()
+const emit = defineEmits(['update:model-value'])
 </script>
 
 <template>
-  <v-navigation-drawer>
+  <v-navigation-drawer v-model:model-value="props.modelValue" @update:model-value="(value) => emit('update:model-value', value)" @click:outside="(value: boolean) => emit('update:model-value', value)">
     <v-list class="d-flex flex-column" height="100%">
       <v-list-item
         prepend-icon="mdi-progress-check"
