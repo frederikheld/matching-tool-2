@@ -46,6 +46,14 @@ const routes = [
         component: () => import(/* webpackChunkName: "bom" */ '@/views/BillOfMaterialsView.vue')
       },
       {
+        path: '/protocols',
+        name: 'protocols',
+        meta: {
+          title: 'Protokolle'
+        },
+        component: () => import(/* webpackChunkName: "protocols" */ '@/views/ProtocolsView.vue')
+      },
+      {
         path: '/settings',
         name: 'settings',
         meta: {

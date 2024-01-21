@@ -23,6 +23,12 @@
       >
         Stücklisten
       </v-list-item>
+      <v-list-item
+        prepend-icon="mdi-list-status"
+        to="protocols"
+      >
+        Protokolle
+      </v-list-item>
 
       <v-spacer />
 
