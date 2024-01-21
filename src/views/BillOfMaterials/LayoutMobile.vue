@@ -84,14 +84,14 @@ function selectComponent (componentId: ElectronicComponentId) : any {
       <v-card-text class="pa-0">
         <v-list density="compact" style="background-color: transparent;">
             <v-list-item v-for="component in searchResults" :key="component.id" @click="selectedComponent = component" :active="selectedComponent?.id === component.id">
-              <template #prepend style="width: 36px !important;">
+              <template #prepend>
                 <v-icon v-if="component.inGabiDB">mdi-star-four-points-small</v-icon>
                 <v-icon v-else></v-icon>
               </template>
 
-              <template #append v-if="selectedComponent?.id === component.id">
+              <!-- <template #append v-if="selectedComponent?.id === component.id">
                 <v-icon>mdi-menu-right</v-icon>
-              </template>
+              </template> -->
               {{ getComponentName(component) }}
             </v-list-item>
           </v-list>
