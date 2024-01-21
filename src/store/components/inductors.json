@@ -1,0 +1,8 @@
+[
+  { "id": "i-000000", "type": "inductor", "housing": "5x5", "mass": 400, "massUnit": "mg", "inGabiDB": true },
+  { "id": "i-000001", "type": "inductor", "housing": "5x5", "mass": 410, "massUnit": "mg", "inGabiDB": false, "referenceComponent": "i-000000", "scalingFactor": 1.1 },
+  { "id": "i-000002", "type": "inductor", "housing": "5x5", "mass": 420, "massUnit": "mg", "inGabiDB": false, "referenceComponent": "i-000000", "scalingFactor": 1.15 },
+  { "id": "i-000003", "type": "inductor", "housing": "5x5", "mass": 430, "massUnit": "mg", "inGabiDB": false, "referenceComponent": "i-000000", "scalingFactor": 1.2 },
+  { "id": "i-000004", "type": "inductor", "housing": "5x5", "mass": 440, "massUnit": "mg", "inGabiDB": false, "referenceComponent": "i-000000", "scalingFactor": 1.25 },
+  { "id": "i-000005", "type": "inductor", "housing": "5x5", "mass": 450, "massUnit": "mg", "inGabiDB": false, "referenceComponent": "i-000000", "scalingFactor": 1.3 }
+]

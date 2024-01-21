@@ -1,0 +1,11 @@
+[
+  { "id": "r-000000", "type": "resistor", "housing": "MMA", "length": 3.6, "diameter": 1.4, "mass": 19, "massUnit": "mg", "inGabiDB": true },
+  { "id": "r-000001", "type": "resistor", "housing": "MMA", "length": 3.8, "diameter": 1.4, "mass": 21, "massUnit": "mg", "inGabiDB": false, "referenceComponent": "r-000000", "scalingFactor": 1.2 },
+  { "id": "r-000002", "type": "resistor", "housing": "MMA", "length": 4.0, "diameter": 1.4, "mass": 23, "massUnit": "mg", "inGabiDB": false, "referenceComponent": "r-000000", "scalingFactor": 1.4 },
+  { "id": "r-000003", "type": "resistor", "housing": "MMB", "length": 3.6, "diameter": 1.4, "mass": 19, "massUnit": "mg", "inGabiDB": true },
+  { "id": "r-000004", "type": "resistor", "housing": "MMB", "length": 3.8, "diameter": 1.4, "mass": 21, "massUnit": "mg", "inGabiDB": false, "referenceComponent": "r-000003", "scalingFactor": 1.2 },
+  { "id": "r-000005", "type": "resistor", "housing": "MMB", "length": 4.0, "diameter": 1.4, "mass": 23, "massUnit": "mg", "inGabiDB": false, "referenceComponent": "r-000003", "scalingFactor": 1.4 },
+  { "id": "r-000006", "type": "resistor", "housing": "MMC", "length": 3.6, "diameter": 1.4, "mass": 19, "massUnit": "mg", "inGabiDB": true },
+  { "id": "r-000006", "type": "resistor", "housing": "MMC", "length": 3.8, "diameter": 1.4, "mass": 21, "massUnit": "mg", "inGabiDB": false, "referenceComponent": "r-000006", "scalingFactor": 1.2 },
+  { "id": "r-000006", "type": "resistor", "housing": "MMC", "length": 4.0, "diameter": 1.4, "mass": 23, "massUnit": "mg", "inGabiDB": false, "referenceComponent": "r-000006", "scalingFactor": 1.4 }
+]

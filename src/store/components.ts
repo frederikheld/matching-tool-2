@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 
 import capacitors from './components/capacitors.json'
+import resistors from './components/resistors.json'
+import inductors from './components/inductors.json'
 
 /**
  * PUBLIC TYPES AND INTERFACES
@@ -8,7 +10,7 @@ import capacitors from './components/capacitors.json'
 
 export type ElectronicComponentId = string
 export type ElectronicComponentType = 'capacitor' | 'resistor' | 'induction' | 'diode' | 'FET' | 'IC'
-export type ElectronicComponentHousing = 'Big Case' | 'Small Case' | 'FD' | 'CD' | 'UD' | 'UE'
+export type ElectronicComponentHousing = 'Big Case' | 'Small Case' | 'FD' | 'CD' | 'UD' | 'UE' | 'MMA' | 'MMB' | 'MMU' | '5x5' | '8x10' | '8x6'
 export type ElectronicComponentMassUnit = 'g' | 'mg'
 
 export interface ElectronicComponent {
@@ -34,15 +36,18 @@ export interface ElectronicComponent {
 export function getComponentName (component: ElectronicComponent): string {
   return capitalize(component.type) +
   ' ' + capitalize(component.housing) +
-  ' ' + component.mass + component.massUnit + 
-  ' ' + component.length + 'x' + component.width + 'x' + component.height
+  (component.mass ? ' ' + component.mass + component.massUnit : '') + 
+  (component.length && component.width && component.height ?
+    ' ' + component.length + 'x' + component.width + 'x' + component.height + ' ' :
+    ''
+  ) +
+  (component.length && component.diameter ? 
+    ' ' + component.length + 'x' + component.diameter + ' '
+    : ''
+  )
 }
 
-/**
- * PRIVATE FUNCTIONS
- */
-
-function capitalize (string: string) : string {
+export function capitalize (string: string) : string {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
@@ -53,7 +58,9 @@ function capitalize (string: string) : string {
 export const useComponentsStore = defineStore('components', () : any => {
 
   const components: ElectronicComponent[] = [
-    ...(capacitors as ElectronicComponent[])
+    ...(capacitors as ElectronicComponent[]),
+    ...(resistors as ElectronicComponent[]),
+    ...(inductors as ElectronicComponent[])
   ]
 
   function filterItems (query: string | undefined): ElectronicComponent[] {
@@ -61,12 +68,16 @@ export const useComponentsStore = defineStore('components', () : any => {
       return components
     }
 
-    const regex = new RegExp(query, "i")
+    const queryParts : string[] = query.split(' ')
 
-    const filteredComponents = components.map((item) : { id: string, name: string } => { return { id: item.id, name: getComponentName(item) } }).filter(item => item.name.match(regex))
+    const matchingComponents = components.map((item) : { id: string, name: string } => { return { id: item.id, name: getComponentName(item) } }).filter((item) => {
+      const regex = new RegExp(queryParts.join('.*'), 'i')
+
+      return item.name.match(regex)
+    })
 
     const result : ElectronicComponent[] = []
-    filteredComponents.forEach(component => {
+    matchingComponents.forEach(component => {
       const match = components.find(item => item.id === component.id)
       if (match) result.push(match)
     })
@@ -74,8 +85,13 @@ export const useComponentsStore = defineStore('components', () : any => {
     return result
   }
 
+  function getComponentById (componentId: ElectronicComponentId) : ElectronicComponent | undefined {
+    return components.find(item => item.id === componentId)
+  }
+
   return {
     components,
-    filterItems
+    filterItems,
+    getComponentById
   }
 })
