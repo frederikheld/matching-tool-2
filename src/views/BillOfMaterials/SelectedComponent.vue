@@ -54,7 +54,7 @@ const emit = defineEmits<{
           </tr>
           <tr>
             <td>Referenzbauteil:</td>
-            <td><a @click="emit('component-selected', props.component.id)" class="reference-link">{{ props.component.referenceComponent }}</a></td>
+            <td><a v-if="props.component.referenceComponent" @click="emit('component-selected', props.component.referenceComponent)" class="reference-link">{{ props.component.referenceComponent }}</a></td>
           </tr>
         </v-table>
       </v-col>
