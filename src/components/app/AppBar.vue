@@ -10,7 +10,7 @@ const title = computed(() => {
 </script>
 
 <template>
-  <v-app-bar absolute>
+  <v-app-bar>
     <v-app-bar-nav-icon>
       <v-icon>mdi-menu</v-icon>
     </v-app-bar-nav-icon>
