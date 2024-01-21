@@ -117,14 +117,24 @@ function selectComponent (componentId: ElectronicComponentId) : any {
           </v-col>
         </v-row>
         <v-row class="flex-grow-0">
-          <v-col class="text-center">
+          <v-col>
             <v-card elevation="0" style="background-color: rgba(0, 0, 0, 0.03);">
               <v-card-text>
-                <v-btn @click="addToBillOfMaterials(selectedComponent, 1)">+ 1</v-btn>
-                <v-btn class="ml-2" @click="addToBillOfMaterials(selectedComponent, 10)">+ 10</v-btn>
-                <v-btn class="ml-2" @click="removeFromBillOfMaterials(selectedComponent, 1)">- 1</v-btn>
-                <v-btn class="ml-2" @click="removeFromBillOfMaterials(selectedComponent, 10)">- 10</v-btn>
-                <v-btn class="ml-2" @click="removeFromBillOfMaterials(selectedComponent)">remove</v-btn>
+                <v-container class="pa-0">
+                  <v-row>
+                    <v-col v-if="lgAndUp" cols="2"></v-col>
+                    <v-col cols="10" lg="8" class="text-left text-lg-center">
+                      <v-btn color="primary" :disabled="!selectedComponent" @click="addToBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-plus</v-icon>1</v-btn>
+                      <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="addToBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-plus</v-icon>10</v-btn>
+                      <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="removeFromBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-minus</v-icon>1</v-btn>
+                      <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="removeFromBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-minus</v-icon>10</v-btn>
+                      <v-btn color="warning" :disabled="!selectedComponent" class="ml-2" @click="removeFromBillOfMaterials(selectedComponent)"><v-icon>mdi-delete</v-icon></v-btn>
+                    </v-col>
+                    <v-col cols="2" class="text-right">
+                      <v-btn color="secondary"><v-icon>mdi-export</v-icon></v-btn>
+                    </v-col>
+                  </v-row>
+                </v-container>
               </v-card-text>
             </v-card>
           </v-col>
