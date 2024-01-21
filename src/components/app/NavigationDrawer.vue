@@ -7,7 +7,7 @@ const emit = defineEmits(['update:model-value'])
 
 <template>
   <v-navigation-drawer
-    v-model:model-value="props.modelValue"
+    :model-value="props.modelValue"
     style="z-index: 10000;"
     @update:model-value="(value) => emit('update:model-value', value)"
     @click:outside="(value: boolean) => emit('update:model-value', value)"

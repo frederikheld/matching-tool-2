@@ -14,7 +14,7 @@ const emit = defineEmits(['toggle-nav-drawer'])
 </script>
 
 <template>
-  <v-app-bar>
+  <v-app-bar style="z-index: 20000;">
     <v-app-bar-nav-icon v-if="mdAndDown">
       <v-icon @click="emit('toggle-nav-drawer')">mdi-menu</v-icon>
     </v-app-bar-nav-icon>
