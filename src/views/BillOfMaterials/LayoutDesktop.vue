@@ -24,6 +24,10 @@ const selectedComponent = ref<ElectronicComponent>()
 function selectComponent (componentId: ElectronicComponentId) : any {
   selectedComponent.value = componentsStore.getComponentById(componentId)
 }
+
+function exportBillOfMaterials () : void {
+  console.log(JSON.stringify(bomStore.billOfMaterials, undefined, 2))
+}
 </script>
 
 <template>
@@ -77,7 +81,7 @@ function selectComponent (componentId: ElectronicComponentId) : any {
                       <v-btn color="warning" :disabled="!selectedComponent" class="ml-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent)"><v-icon>mdi-delete</v-icon></v-btn>
                     </v-col>
                     <v-col cols="2" class="text-right">
-                      <v-btn color="secondary"><v-icon>mdi-export</v-icon></v-btn>
+                      <v-btn color="secondary" @click="exportBillOfMaterials"><v-icon>mdi-export</v-icon></v-btn>
                     </v-col>
                   </v-row>
                 </v-container>

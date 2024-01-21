@@ -12,10 +12,13 @@ const imgMap : { [type: string]: string } = {
 }
 
 interface ComponentProps {
+  compact?: boolean,
   component: ElectronicComponent | undefined
 }
 
-const props = defineProps<ComponentProps>()
+const props = withDefaults(defineProps<ComponentProps>(), {
+  compact: false
+})
 
 const emit = defineEmits<{
   (e: 'component-selected', componentId: string): void
@@ -45,7 +48,8 @@ const emit = defineEmits<{
             <td>{{ props.component.housing }}</td>
           </tr>
           <tr>
-            <td>Abmessungen (L x B x H x ⌀):</td>
+            <td v-if="!props.compact">Abmessungen (L x B x H x ⌀):</td>
+            <td v-else>L x B x H x ⌀:</td>
             <td>{{ props.component.length || '-' }} x {{ props.component.width || '-' }} x {{ props.component.height || '-' }} x {{ props.component.diameter || '-' }}</td>
           </tr>
           <tr>

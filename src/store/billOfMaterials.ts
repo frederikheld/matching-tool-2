@@ -32,7 +32,7 @@ export const billOfMaterialsHeader = [
  */
 export const billOfMaterialsHeaderCompact = [
   { key: 'id', title: 'ID' },
-  { key: 'name', title: 'Name' },
+  { key: 'name', title: 'Name', minWidth: '120px'  },
   { key: 'referenceComponent', title: 'Ref' },
   { key: 'scalingFactor', title: 'SF' },
   { key: 'count', title: '#' }
@@ -50,7 +50,138 @@ export const billOfMaterialsHeaderCompact = [
 
 export const useBillOfMaterialsStore = defineStore('billOfMaterials', () : any => {
   const billOfMaterials = ref<BillOfMaterialsItem[]>([])
-  // const billOfMaterials : Ref<BillOfMaterialsItem[]> = ref([])
+  
+  billOfMaterials.value = JSON.parse(`[
+    {
+      "id": "r-000003",
+      "type": "resistor",
+      "housing": "MMB",
+      "length": 3.6,
+      "diameter": 1.4,
+      "mass": 19,
+      "massUnit": "mg",
+      "inGabiDB": true,
+      "count": 40
+    },
+    {
+      "id": "r-000005",
+      "type": "resistor",
+      "housing": "MMB",
+      "length": 4,
+      "diameter": 1.4,
+      "mass": 23,
+      "massUnit": "mg",
+      "inGabiDB": false,
+      "referenceComponent": "r-000003",
+      "scalingFactor": 1.4,
+      "count": 20
+    },
+    {
+      "id": "ic-000005",
+      "type": "capacitor",
+      "housing": "FD",
+      "width": 10,
+      "length": 12,
+      "height": 6,
+      "mass": 490,
+      "massUnit": "mg",
+      "inGabiDB": false,
+      "referenceComponent": "ic-000000",
+      "scalingFactor": 1.73,
+      "count": 20
+    },
+    {
+      "id": "ic-000003",
+      "type": "capacitor",
+      "housing": "FD",
+      "width": 10,
+      "length": 12,
+      "height": 6,
+      "mass": 412,
+      "massUnit": "mg",
+      "inGabiDB": false,
+      "referenceComponent": "ic-000000",
+      "scalingFactor": 1.26,
+      "count": 20
+    },
+    {
+      "id": "i-000000",
+      "type": "inductor",
+      "housing": "5x5",
+      "mass": 400,
+      "massUnit": "mg",
+      "inGabiDB": true,
+      "count": 20
+    },
+    {
+      "id": "i-000005",
+      "type": "inductor",
+      "housing": "5x5",
+      "mass": 450,
+      "massUnit": "mg",
+      "inGabiDB": false,
+      "referenceComponent": "i-000000",
+      "scalingFactor": 1.3,
+      "count": 30
+    },
+    {
+      "id": "i-000004",
+      "type": "inductor",
+      "housing": "5x5",
+      "mass": 440,
+      "massUnit": "mg",
+      "inGabiDB": false,
+      "referenceComponent": "i-000000",
+      "scalingFactor": 1.25,
+      "count": 30
+    },
+    {
+      "id": "i-000008",
+      "type": "inductor",
+      "housing": "8x10",
+      "mass": 882,
+      "massUnit": "mg",
+      "inGabiDB": false,
+      "referenceComponent": "i-000006",
+      "scalingFactor": 2.6,
+      "count": 20
+    },
+    {
+      "id": "i-000001",
+      "type": "inductor",
+      "housing": "5x5",
+      "mass": 410,
+      "massUnit": "mg",
+      "inGabiDB": false,
+      "referenceComponent": "i-000000",
+      "scalingFactor": 1.1,
+      "count": 20
+    },
+    {
+      "id": "i-000003",
+      "type": "inductor",
+      "housing": "5x5",
+      "mass": 430,
+      "massUnit": "mg",
+      "inGabiDB": false,
+      "referenceComponent": "i-000000",
+      "scalingFactor": 1.2,
+      "count": 30
+    },
+    {
+      "id": "r-000008",
+      "type": "resistor",
+      "housing": "MMC",
+      "length": 4,
+      "diameter": 1.4,
+      "mass": 23,
+      "massUnit": "mg",
+      "inGabiDB": false,
+      "referenceComponent": "r-000006",
+      "scalingFactor": 1.4,
+      "count": 30
+    }
+  ]`)
 
   /**
    * Will add the given count of the given component to the bill of materials.
@@ -114,11 +245,11 @@ export const useBillOfMaterialsStore = defineStore('billOfMaterials', () : any =
   }[]>(() => {
     return billOfMaterials.value.map((component) => {
       return {
+        count: component.count,
         id: component.id,
         name: getComponentName(component),
         referenceComponent: component.referenceComponent,
-        scalingFactor: component.scalingFactor,
-        count: component.count
+        scalingFactor: component.scalingFactor
       }
     })
   })

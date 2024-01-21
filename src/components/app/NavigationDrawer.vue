@@ -6,7 +6,12 @@ const emit = defineEmits(['update:model-value'])
 </script>
 
 <template>
-  <v-navigation-drawer v-model:model-value="props.modelValue" @update:model-value="(value) => emit('update:model-value', value)" @click:outside="(value: boolean) => emit('update:model-value', value)">
+  <v-navigation-drawer
+    v-model:model-value="props.modelValue"
+    style="z-index: 10000;"
+    @update:model-value="(value) => emit('update:model-value', value)"
+    @click:outside="(value: boolean) => emit('update:model-value', value)"
+  >
     <v-list class="d-flex flex-column" height="100%">
       <v-list-item
         prepend-icon="mdi-progress-check"

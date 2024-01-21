@@ -31,11 +31,10 @@ function selectComponent (componentId: ElectronicComponentId) : any {
 </script>
 
 <template>
-
-  <v-container>
+  <v-container style="margin-bottom: 144px;">
     <v-row>
       <v-col>
-        <SelectedComponent :component="selectedComponent" @component-selected="(componentId: string) => selectComponent(componentId)" />
+        <SelectedComponent :component="selectedComponent" @component-selected="(componentId: string) => selectComponent(componentId)" compact />
       </v-col>
     </v-row>
 
@@ -44,18 +43,18 @@ function selectComponent (componentId: ElectronicComponentId) : any {
         <v-container class="pa-0">
           <v-row>
             <v-col class="text-center">
-              <v-btn color="primary" :disabled="!selectedComponent" @click="bomStore.addToBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-plus</v-icon>1</v-btn>
-              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="bomStore.addToBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-plus</v-icon>10</v-btn>
-              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-minus</v-icon>1</v-btn>
-              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-minus</v-icon>10</v-btn>
-              <v-btn color="warning" :disabled="!selectedComponent" class="ml-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent)"><v-icon>mdi-delete</v-icon></v-btn>
+              <v-btn color="primary" :disabled="!selectedComponent" class="mt-2" @click="bomStore.addToBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-plus</v-icon>1</v-btn>
+              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2 mt-2" @click="bomStore.addToBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-plus</v-icon>10</v-btn>
+              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2 mt-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-minus</v-icon>1</v-btn>
+              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2 mt-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-minus</v-icon>10</v-btn>
+              <v-btn color="warning" :disabled="!selectedComponent" class="ml-2 mt-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent)"><v-icon>mdi-delete</v-icon></v-btn>
             </v-col>
           </v-row>
         </v-container>
       </v-col>
     </v-row>
 
-    <v-row class="pa-0 mx-n7">
+    <v-row class="pa-0">
       <v-col v-if="bomStore.formattedBillOfMaterials.length > 0">
         <v-data-table
           :items="bomStore.formattedBillOfMaterials"
@@ -71,8 +70,20 @@ function selectComponent (componentId: ElectronicComponentId) : any {
           @click:row="(event: Event, row: any) => selectComponent(row.item.id)"
         />
       </v-col>
-      <v-col v-else class="text-center">
+      <v-col v-else class="text-center my-12">
         <div>Die Stückliste ist leer</div>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <v-btn
+          color="secondary"
+          block
+          :disabled="bomStore.formattedBillOfMaterials.length < 1"
+        >
+          <v-icon>mdi-export</v-icon>Export
+        </v-btn>
       </v-col>
     </v-row>
   </v-container>

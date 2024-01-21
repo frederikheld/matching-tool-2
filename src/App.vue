@@ -5,7 +5,7 @@ import { useDisplay } from 'vuetify'
 import NavigationDrawer from '@/components/app/NavigationDrawer.vue'
 import AppBar from '@/components/app/AppBar.vue'
 
-const { mdAndUp } = useDisplay()
+const { mdAndUp, smAndUp } = useDisplay()
 
 const navDrawerIsOpen = ref<boolean>(mdAndUp.value)
 </script>
@@ -16,10 +16,11 @@ const navDrawerIsOpen = ref<boolean>(mdAndUp.value)
 
     <NavigationDrawer v-model="navDrawerIsOpen" />
 
-    <v-main style="height: 100vh;">
+    <v-main :style="( mdAndUp ? 'height: 100dvh;' : 'height: 100dvh; overflow-y: scroll; margin-bottom: -72px;')">
       <RouterView />
     </v-main>
   </v-app>
+  <!-- + ( mdAndUp ? 'height: 10dvh;' : 'height: calc(10dvh - 164px); overflow-y: scroll;') +  -->
 </template>
 
 <style>
