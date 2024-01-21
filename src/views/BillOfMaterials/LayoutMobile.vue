@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-import { useComponentsStore } from '@/store/components'
+import { useComponentsStore, getComponentName } from '@/store/components'
 import type { ElectronicComponent, ElectronicComponentId } from '@/store/components'
 
 import SelectedComponent from './SelectedComponent.vue'
@@ -16,7 +16,10 @@ const {
   formattedBillOfMaterials
 } = useBillOfMaterials() 
 
-const bottomSheetIsOpen = ref<boolean>(false)
+const bottomSheetClosedHeight = '72px'
+const bottomSheetOpenHeight = '40%'
+const bottomSheetIsOpen = ref<boolean>(true)
+const bottomSheetHeight = ref<string>(bottomSheetClosedHeight)
 
 const componentsStore = useComponentsStore()
 
@@ -59,18 +62,42 @@ function selectComponent (componentId: ElectronicComponentId) : any {
     </v-row>
   </v-container>
 
-  <v-bottom-sheet v-model="bottomSheetIsOpen">
+  <v-bottom-sheet
+    v-model="bottomSheetIsOpen"
+    :scrim="false"
+    persistent
+    :scrollable="true"
+    no-click-animation
+    :height="bottomSheetHeight"
+    @click:outside="bottomSheetHeight = bottomSheetClosedHeight"
+  >
     <v-card>
       <v-card-title>
-          <v-text-field
+        <v-text-field
           v-model="query"
           label="Katalog durchsuchen ..."
           clearable
           hide-details
+          @click="bottomSheetHeight = bottomSheetOpenHeight"
         />
       </v-card-title>
+      <v-card-text class="pa-0">
+        <v-list density="compact" style="background-color: transparent;">
+            <v-list-item v-for="component in searchResults" :key="component.id" @click="selectedComponent = component" :active="selectedComponent?.id === component.id">
+              <template #prepend style="width: 36px !important;">
+                <v-icon v-if="component.inGabiDB">mdi-star-four-points-small</v-icon>
+                <v-icon v-else></v-icon>
+              </template>
+
+              <template #append v-if="selectedComponent?.id === component.id">
+                <v-icon>mdi-menu-right</v-icon>
+              </template>
+              {{ getComponentName(component) }}
+            </v-list-item>
+          </v-list>
+        </v-card-text>
     </v-card>
-  </v-bottom-sheet>  
+  </v-bottom-sheet>
 </template>
 
 <style scoped>
