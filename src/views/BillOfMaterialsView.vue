@@ -2,15 +2,7 @@
 import { computed, ref } from 'vue'
 import { useComponentsStore, getComponentName, capitalize, type ElectronicComponent } from '@/store/components'
 
-import imgResistor from "@/assets/img/components/resistor.webp"
-import imgCapacitor from "@/assets/img/components/capacitor.jpg"
-import imgInductor from "@/assets/img/components/inductor.jpg"
-
-const imgMap : { [type: string]: string } = {
-  resistor: imgResistor,
-  capacitor: imgCapacitor,
-  inductor: imgInductor 
-}
+import SelectedComponent from './BillOfMaterials/SelectedComponent.vue'
 
 const componentsStore = useComponentsStore()
 
@@ -68,73 +60,86 @@ function removeFromBillOfMaterials (component?: ElectronicComponent, count?: num
     }
   }
 }
+
+const formattedBillOfMaterials = computed(() => {
+  return billOfMaterials.value.map((component) => {
+    return {
+      id: component.id,
+      name: getComponentName(component),
+      referenceComponent: component.referenceComponent,
+      scalingFactor: component.scalingFactor,
+      count: component.count
+    }
+  })
+})
 </script>
 
 <template>
-  <v-container fluid>
-    <v-row>
+
+  <v-container fluid class="d-flex flex-column pa-3" style="height: calc(100vh - 64px);">
+    <v-row class="flex-0-0">
       <v-col>
-        <v-text-field v-model="query" label="Katalog durchsuchen ..." clearable></v-text-field>
+        <v-text-field
+          v-model="query"
+          label="Katalog durchsuchen ..."
+          clearable
+          hide-details
+        />
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="4">
-        <v-list density="compact">
-          <v-list-item v-for="component in searchResults" :key="component.id" @click="selectedComponent = component" :active="selectedComponent?.id === component.id" :append-icon="(selectedComponent?.id === component.id ? 'mdi-menu-right' : undefined)">
-            <template #prepend style="width: 36px !important;">
-              <v-icon v-if="component.inGabiDB">mdi-star-four-points-small</v-icon>
-              <v-icon v-else></v-icon>
-            </template>
-            {{ getComponentName(component) }}
-          </v-list-item>
-        </v-list>
+    <v-row class="d-flex flex-row">
+      <v-col cols="4" class="d-flex flex-column pa-0" style="max-height: calc(100vh - 64px - 110px);">
+        <div class="d-flex flex-column flex-grow-1" style="overflow-y: hidden;">
+          <v-list density="compact">
+            <v-list-item v-for="component in searchResults" :key="component.id" @click="selectedComponent = component" :active="selectedComponent?.id === component.id" :append-icon="(selectedComponent?.id === component.id ? 'mdi-menu-right' : undefined)">
+              <template #prepend style="width: 36px !important;">
+                <v-icon v-if="component.inGabiDB">mdi-star-four-points-small</v-icon>
+                <v-icon v-else></v-icon>
+              </template>
+              {{ getComponentName(component) }}
+            </v-list-item>
+          </v-list>
+        </div>
       </v-col>
-      <v-col cols="8">
-        <v-row v-if="selectedComponent">
-          <v-col cols="8">
-            <h2>{{ getComponentName(selectedComponent) }}</h2>
-            <v-table class="mt-4">
-              <tr>
-                <td>Typ:</td>
-                <td>{{ capitalize(selectedComponent.type) }}</td>
-              </tr>
-              <tr>
-                <td>Gehäuse:</td>
-                <td>{{ selectedComponent.housing }}</td>
-              </tr>
-              <tr>
-                <td>Abmessungen (L x B x H x ⌀):</td>
-                <td>{{ selectedComponent.length || '-' }} x {{ selectedComponent.width || '-' }} x {{ selectedComponent.height || '-' }} x {{ selectedComponent.diameter || '-' }}</td>
-              </tr>
-              <tr>
-                <td>Masse:</td>
-                <td>{{ selectedComponent.mass }} {{ selectedComponent.massUnit }}</td>
-              </tr>
-              <tr>
-                <td>Referenzbauteil:</td>
-                <td><a @click="selectedComponent = componentsStore.getComponentById(selectedComponent.referenceComponent)">{{ selectedComponent.referenceComponent }}</a></td>
-              </tr>
-            </v-table>
-          </v-col>
-          <v-col cols="4">
-            <v-img :src="imgMap[selectedComponent.type]" max-height="160" />
+      <v-col cols="8" class="d-flex flex-column">
+        <v-row class="flex-grow-0" style="min-height: 250px;">
+          <v-col>
+            <SelectedComponent :component="selectedComponent" @component-selected="(componentId: string) => selectedComponent = componentsStore.getComponentById(componentId)" />
           </v-col>
         </v-row>
-        <v-row>
-          <v-col>
-            <v-btn @click="addToBillOfMaterials(selectedComponent, 1)">+ 1</v-btn>
-            <v-btn class="ml-2" @click="addToBillOfMaterials(selectedComponent, 10)">+ 10</v-btn>
-            <v-btn class="ml-2" @click="removeFromBillOfMaterials(selectedComponent, 1)">- 1</v-btn>
-            <v-btn class="ml-2" @click="removeFromBillOfMaterials(selectedComponent, 10)">- 10</v-btn>
-            <v-btn class="ml-2" @click="removeFromBillOfMaterials(selectedComponent)">remove</v-btn>
+        <v-row class="flex-grow-0">
+          <v-col class="text-center">
+            <v-card elevation="0" style="background-color: rgba(0, 0, 0, 0.05);">
+              <v-card-text>
+                <v-btn @click="addToBillOfMaterials(selectedComponent, 1)">+ 1</v-btn>
+                <v-btn class="ml-2" @click="addToBillOfMaterials(selectedComponent, 10)">+ 10</v-btn>
+                <v-btn class="ml-2" @click="removeFromBillOfMaterials(selectedComponent, 1)">- 1</v-btn>
+                <v-btn class="ml-2" @click="removeFromBillOfMaterials(selectedComponent, 10)">- 10</v-btn>
+                <v-btn class="ml-2" @click="removeFromBillOfMaterials(selectedComponent)">remove</v-btn>
+              </v-card-text>
+            </v-card>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col>
-            <v-data-table :items="billOfMaterials" />
+        <v-row class="d-flex flex-column">
+          <v-col v-if="formattedBillOfMaterials.length > 0" class="flex-grow-1 pa-0" style="overflow-y: scroll">
+            <v-data-table
+              :items="formattedBillOfMaterials"
+              items-per-page="-1"
+              density="comfortable"
+              fixed-header
+            />
+          </v-col>
+          <v-col v-else class="text-center">
+            <div>Die Stückliste ist leer</div>
           </v-col>
         </v-row>
       </v-col>
     </v-row>
   </v-container>
 </template>
+
+<style scoped>
+:deep(.v-data-table-footer) {
+  display: none;
+}
+</style>

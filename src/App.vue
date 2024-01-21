@@ -9,8 +9,14 @@ import AppBar from '@/components/app/AppBar.vue'
 
     <NavigationDrawer />
 
-    <v-main>
+    <v-main style="height: 100vh;">
       <RouterView />
     </v-main>
   </v-app>
 </template>
+
+<style>
+body {
+  overflow-y: hidden;
+}
+</style>
