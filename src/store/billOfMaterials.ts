@@ -20,22 +20,22 @@ export type BillOfMaterialsItem = (ElectronicComponent & { count: number })
  * Use for `headers` prop on `v-data-table` in desktop layout.
  */
 export const billOfMaterialsHeader = [
+  { key: 'count', title: 'Count' },
   { key: 'id', title: 'ID' },
   { key: 'name', title: 'Name' },
   { key: 'referenceComponent', title: 'Reference Component' },
-  { key: 'scalingFactor', title: 'Scaling Factor' },
-  { key: 'count', title: 'Count' }
+  { key: 'scalingFactor', title: 'Scaling Factor' }
 ]
 
 /**
  * Use for `headers` prop on `v-data-table` in mobile layout.
  */
 export const billOfMaterialsHeaderCompact = [
+  { key: 'count', title: '#' },
   { key: 'id', title: 'ID' },
   { key: 'name', title: 'Name', minWidth: '120px'  },
   { key: 'referenceComponent', title: 'Ref' },
-  { key: 'scalingFactor', title: 'SF' },
-  { key: 'count', title: '#' }
+  { key: 'scalingFactor', title: 'SF' }
 ]
 
 
@@ -237,11 +237,11 @@ export const useBillOfMaterialsStore = defineStore('billOfMaterials', () : any =
    */
 
   const formattedBillOfMaterials = computed<{
+    count: number,
     id: string,
     name: string,
     referenceComponent: string | undefined,
-    scalingFactor: number | undefined,
-    count: number
+    scalingFactor: number | undefined
   }[]>(() => {
     return billOfMaterials.value.map((component) => {
       return {

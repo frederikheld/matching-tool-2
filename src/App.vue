@@ -20,7 +20,6 @@ const navDrawerIsOpen = ref<boolean>(mdAndUp.value)
       <RouterView />
     </v-main>
   </v-app>
-  <!-- + ( mdAndUp ? 'height: 10dvh;' : 'height: calc(10dvh - 164px); overflow-y: scroll;') +  -->
 </template>
 
 <style>

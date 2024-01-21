@@ -55,7 +55,7 @@ function selectComponent (componentId: ElectronicComponentId) : any {
     </v-row>
 
     <v-row class="pa-0">
-      <v-col v-if="bomStore.formattedBillOfMaterials.length > 0">
+      <v-col v-if="bomStore.formattedBillOfMaterials.length > 0" class="px-0">
         <v-data-table
           :items="bomStore.formattedBillOfMaterials"
           items-per-page="-1"
