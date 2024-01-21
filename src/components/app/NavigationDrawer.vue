@@ -11,24 +11,28 @@ const emit = defineEmits(['update:model-value'])
       <v-list-item
         prepend-icon="mdi-progress-check"
         to="projects"
+        color="primary"
       >
         Projekte
       </v-list-item>
       <v-list-item
         prepend-icon="mdi-book-outline"
         to="catalog"
+        color="primary"
       >
         Katalog
       </v-list-item>
       <v-list-item
         prepend-icon="mdi-invoice-list-outline"
         to="bom"
+        color="primary"
       >
         Stücklisten
       </v-list-item>
       <v-list-item
         prepend-icon="mdi-list-status"
         to="protocols"
+        color="primary"
       >
         Protokolle
       </v-list-item>
@@ -38,6 +42,7 @@ const emit = defineEmits(['update:model-value'])
       <v-list-item
         prepend-icon="mdi-cog-outline"
         to="settings"
+        color="primary"
       >
         Einstellungen
       </v-list-item>
