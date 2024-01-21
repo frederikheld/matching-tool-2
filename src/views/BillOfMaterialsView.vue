@@ -1,11 +1,24 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
+import { useDisplay } from 'vuetify'
+
+import { useBillOfMaterials } from './BillOfMaterials/billOfMaterials'
+
 import { useComponentsStore, getComponentName } from '@/store/components'
 import type { ElectronicComponent, ElectronicComponentId } from '@/store/components'
 
 import SelectedComponent from './BillOfMaterials/SelectedComponent.vue'
+import LayoutMobile from './BillOfMaterials/LayoutMobile.vue'
 
 const componentsStore = useComponentsStore()
+
+const { smAndDown, lgAndUp } = useDisplay()
+
+const {
+  addToBillOfMaterials,
+  formattedBillOfMaterials,
+  removeFromBillOfMaterials
+} = useBillOfMaterials()
 
 const query = ref<string>()
 
@@ -15,73 +28,20 @@ const searchResults = computed(() => {
 
 const selectedComponent = ref<ElectronicComponent>()
 
-type billOfMaterialsItem = (ElectronicComponent & { count: number })
-
-const billOfMaterials = ref<billOfMaterialsItem[]>([])
-
-function addToBillOfMaterials (component?: ElectronicComponent, count?: number) : void {
-  if (component) {
-    const existingEntry: billOfMaterialsItem | undefined = billOfMaterials.value.find((entry) => entry.id === component.id)
-
-    if (count) {
-      if (existingEntry) {
-        existingEntry.count = existingEntry.count + count
-      } else {
-        billOfMaterials.value.push({
-          ...component,
-          count
-        })
-      }
-    }
-  }
-}
-
-/**
- * Will remove the given count of the given component from the bill of materials.
- * If the remaining amount is 0 or below, the component will be removed from the list.
- * If count is not given, the component will be removed from the list as well.
- */
-function removeFromBillOfMaterials (component?: ElectronicComponent, count?: number) : void {
-  if (component) {
-    const existingEntry: billOfMaterialsItem | undefined = billOfMaterials.value.find((entry) => entry.id === component.id)
-
-    if (existingEntry) {
-
-      if (count) {
-        existingEntry.count = existingEntry.count - count
-
-        if (existingEntry.count <= 0) {
-          const existingEntryIndex = billOfMaterials.value.findIndex((entry) => entry.id === component.id)
-          billOfMaterials.value.splice(existingEntryIndex, 1)
-        }
-      } else {
-        const existingEntryIndex = billOfMaterials.value.findIndex((entry) => entry.id === component.id)
-        billOfMaterials.value.splice(existingEntryIndex, 1)
-      }
-    }
-  }
-}
-
-const formattedBillOfMaterials = computed(() => {
-  return billOfMaterials.value.map((component) => {
-    return {
-      id: component.id,
-      name: getComponentName(component),
-      referenceComponent: component.referenceComponent,
-      scalingFactor: component.scalingFactor,
-      count: component.count
-    }
-  })
-})
-
 function selectComponent (componentId: ElectronicComponentId) : any {
   selectedComponent.value = componentsStore.getComponentById(componentId)
 }
 </script>
 
 <template>
+  <!-- MOBILE LAYOUT -->
+  <div v-if="smAndDown">
+    <LayoutMobile />
+  </div>
 
-  <v-container fluid class="d-flex flex-column pa-3" style="height: calc(100vh - 64px);">
+  <!-- DESKTOP LAYOUT -->
+
+  <v-container v-else fluid class="d-flex flex-column pa-3" style="height: calc(100vh - 64px);">
     <v-row class="flex-0-0">
       <v-col>
         <v-text-field
