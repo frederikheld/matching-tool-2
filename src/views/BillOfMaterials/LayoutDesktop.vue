@@ -75,10 +75,10 @@ function exportBillOfMaterials () : void {
                     <v-col v-if="lgAndUp" cols="2"></v-col>
                     <v-col cols="10" lg="8" class="text-left text-lg-center">
                       <v-btn color="primary" :disabled="!selectedComponent" @click="bomStore.addToBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-plus</v-icon>1</v-btn>
-                      <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="bomStore.addToBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-plus</v-icon>10</v-btn>
-                      <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-minus</v-icon>1</v-btn>
-                      <v-btn color="primary" :disabled="!selectedComponent" class="ml-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-minus</v-icon>10</v-btn>
-                      <v-btn color="warning" :disabled="!selectedComponent" class="ml-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent)"><v-icon>mdi-delete</v-icon></v-btn>
+                      <v-btn color="primary" :disabled="!selectedComponent" class="ml-3" @click="bomStore.addToBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-plus</v-icon>10</v-btn>
+                      <v-btn color="primary" :disabled="!selectedComponent" class="ml-3" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-minus</v-icon>1</v-btn>
+                      <v-btn color="primary" :disabled="!selectedComponent" class="ml-3" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-minus</v-icon>10</v-btn>
+                      <v-btn color="warning" :disabled="!selectedComponent" class="ml-3" @click="bomStore.removeFromBillOfMaterials(selectedComponent)"><v-icon>mdi-delete</v-icon></v-btn>
                     </v-col>
                     <v-col cols="2" class="text-right">
                       <v-btn color="secondary" @click="exportBillOfMaterials"><v-icon>mdi-export</v-icon></v-btn>

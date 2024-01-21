@@ -41,13 +41,31 @@ function selectComponent (componentId: ElectronicComponentId) : any {
     <v-row>
       <v-col>
         <v-container class="pa-0">
-          <v-row>
-            <v-col class="text-center">
-              <v-btn color="primary" :disabled="!selectedComponent" class="mt-2" @click="bomStore.addToBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-plus</v-icon>1</v-btn>
-              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2 mt-2" @click="bomStore.addToBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-plus</v-icon>10</v-btn>
-              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2 mt-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 1)"><v-icon>mdi-minus</v-icon>1</v-btn>
-              <v-btn color="primary" :disabled="!selectedComponent" class="ml-2 mt-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 10)"><v-icon>mdi-minus</v-icon>10</v-btn>
-              <v-btn color="warning" :disabled="!selectedComponent" class="ml-2 mt-2" @click="bomStore.removeFromBillOfMaterials(selectedComponent)"><v-icon>mdi-delete</v-icon></v-btn>
+          <v-row class="text-center d-flex flex-row justify-space-between pa-2">
+            <v-col class="flex-grow-0 pa-1">
+              <v-btn color="primary" size="small" :disabled="!selectedComponent" @click="bomStore.addToBillOfMaterials(selectedComponent, 1)">
+                <v-icon>mdi-plus</v-icon>1
+              </v-btn>
+            </v-col>
+            <v-col class="flex-grow-0 pa-1">
+              <v-btn dense color="primary" size="small" :disabled="!selectedComponent" @click="bomStore.addToBillOfMaterials(selectedComponent, 10)">
+                <v-icon>mdi-plus</v-icon>10
+              </v-btn>
+            </v-col>
+            <v-col class="flex-grow-0 pa-1">
+              <v-btn color="primary" size="small" :disabled="!selectedComponent" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 1)">
+                <v-icon>mdi-minus</v-icon>1
+              </v-btn>
+            </v-col>
+            <v-col class="flex-grow-0 pa-1">
+              <v-btn color="primary" size="small" :disabled="!selectedComponent" @click="bomStore.removeFromBillOfMaterials(selectedComponent, 10)">
+                <v-icon>mdi-minus</v-icon>10
+              </v-btn>
+            </v-col>
+            <v-col class="flex-grow-0 pa-1">
+              <v-btn color="warning" size="small" :disabled="!selectedComponent" @click="bomStore.removeFromBillOfMaterials(selectedComponent)">
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
             </v-col>
           </v-row>
         </v-container>
