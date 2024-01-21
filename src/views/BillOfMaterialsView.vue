@@ -15,6 +15,7 @@ const componentsStore = useComponentsStore()
 const { smAndDown, lgAndUp } = useDisplay()
 
 const {
+  billOfMaterialsHeader,
   addToBillOfMaterials,
   formattedBillOfMaterials,
   removeFromBillOfMaterials
@@ -111,6 +112,7 @@ function selectComponent (componentId: ElectronicComponentId) : any {
                   class: [data.item.id === selectedComponent?.id && 'selected']
                 }
               }"
+              :headers="billOfMaterialsHeader"
               @click:row="(event: Event, row: any) => selectComponent(row.item.id)"
             />
           </v-col>

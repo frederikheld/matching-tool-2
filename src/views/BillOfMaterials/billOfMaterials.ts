@@ -5,7 +5,44 @@ import { getComponentName } from '@/store/components'
 export type BillOfMaterialsItem = (ElectronicComponent & { count: number })
 
 export function useBillOfMaterials () {
+
+  /**
+   * VARIABLES
+   */
+
+  /**
+   * Use for `headers` prop on `v-data-table` in desktop layout.
+   */
+  const billOfMaterialsHeader = [
+    { key: 'id', title: 'ID' },
+    { key: 'name', title: 'Name' },
+    { key: 'referenceComponent', title: 'Reference Component' },
+    { key: 'scalingFactor', title: 'Scaling Factor' },
+    { key: 'count', title: 'Count' }
+  ]
+
+  /**
+   * Use for `headers` prop on `v-data-table` in mobile layout.
+   */
+  const billOfMaterialsHeaderCompact = [
+    { key: 'id', title: 'ID' },
+    { key: 'name', title: 'Name' },
+    { key: 'referenceComponent', title: 'Ref' },
+    { key: 'scalingFactor', title: 'SF' },
+    { key: 'count', title: '#' }
+  ]
+
+
+  /**
+   * REFS
+   */
+
   const billOfMaterials = ref<BillOfMaterialsItem[]>([])
+
+
+  /**
+   * METHODS
+   */
 
   /**
    * Will add the given count of the given component to the bill of materials.
@@ -56,6 +93,11 @@ export function useBillOfMaterials () {
     }
   }
 
+
+  /**
+   * COMPUTED PROPERTIES
+   */
+
   const formattedBillOfMaterials = computed(() => {
     return billOfMaterials.value.map((component) => {
       return {
@@ -68,7 +110,14 @@ export function useBillOfMaterials () {
     })
   })
 
+
+  /**
+   * EXPORTS
+   */
+
   return {
+    billOfMaterialsHeader,
+    billOfMaterialsHeaderCompact,
     billOfMaterials,
     formattedBillOfMaterials,
     addToBillOfMaterials,
